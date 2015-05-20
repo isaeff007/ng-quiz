@@ -3,5 +3,5 @@
  */
 angular.module('quizApp')
     .factory('quizBasicFactory', function(){
-       return {title: Anton};
+       return {title: 'Anton'};
     });
