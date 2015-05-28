@@ -1,4 +1,4 @@
-{
+﻿{
   "name":      "Basic Quiz Example",
   "questions": [
     {
@@ -8,7 +8,7 @@
     },
     {
       "_id":      2,
-      "question": "The acronym 'SPA' stands for Single-Page Application.",
+      "question": "А сейчас?",
       "answer":   true
     },
     {
