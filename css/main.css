@@ -9,3 +9,8 @@
 .title {
     color: #999;
 }
+
+.results{
+    background-color: seagreen;
+    font-weight: bold;
+}

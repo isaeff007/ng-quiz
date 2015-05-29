@@ -2,16 +2,16 @@
  * Created by ak on 19.05.2015.
  */
 angular.module('quizApp')
-    .controller('quizBasicController',['$scope', 'quizBasicFactory',
-        function ($scope, quizBasicFactory  ) {
+    .controller('quizBasicController',['$scope','QUIZCONSTANTS', 'quizBasicFactory',
+        function ($scope, QUIZCONSTANTS,  quizBasicFactory  ) {
 
-            $scope.testValue='YES';
-            $scope.factoryValue=1;
-
+            $scope.constants = QUIZCONSTANTS;
             $scope.title = null; // quiz title
             $scope.quiz = {}; // quiz questions
             $scope.results = []; // user results
             $scope.readstatus = 33;
+            $scope.pointsEarned =0;
+            $scope.pointsToEarn=0;
 
             quizBasicFactory.success(function(data, status) {
                 //status 200
@@ -32,10 +32,12 @@ angular.module('quizApp')
                     $scope.results.push({
                         _id:      $scope.quiz[i]._id,
                         answer :  $scope.quiz[i].answer, //the correct answer!
+                        //the fields are set later in checkUserChoice
                         userChoice: null,
-                        correct : null
+                        correct : null,
+                        points : $scope.quiz[i].points
                     });
-                    //console.log('result: '+$scope.results[i]._id+' answer: '+$scope.results[i].answer);
+                    $scope.pointsToEarn+=$scope.quiz[i].points;
                 }
             };
 
@@ -45,9 +47,12 @@ angular.module('quizApp')
                 $scope.results[questionid-1].userChoice = userChoice;
                 //check the userChoice against the correct answer
                 if ($scope.results[questionid-1].answer === userChoice){
-                    $scope.results[questionid-1].correct='Correct';
+                    $scope.results[questionid-1].correct = $scope.constants.CORRECT;
+                    $scope.pointsEarned += $scope.results[questionid-1].points
                 }else{
-                    $scope.results[questionid-1].correct='Incorrect';
+                    $scope.results[questionid-1].correct=$scope.constants.INCORRECT;
+                    //set the point to zero if not correct
+                    $scope.results[questionid-1].points=0;
                 }
             };
 
@@ -60,5 +65,7 @@ angular.module('quizApp')
                     }
                 }
                 return false; //all radio are checked
+
             };
+
         }]);
