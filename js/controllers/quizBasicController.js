@@ -35,7 +35,8 @@ angular.module('quizApp')
                         //the fields are set later in checkUserChoice
                         userChoice: null,
                         correct : null,
-                        points : $scope.quiz[i].points
+                        //init with 0 (otherwise with $scope.quiz[i-1].points;
+                        points : 0
                     });
                     $scope.pointsToEarn+=$scope.quiz[i].points;
                 }
@@ -48,22 +49,40 @@ angular.module('quizApp')
                 //check the userChoice against the correct answer
                 if ($scope.results[questionid-1].answer === userChoice){
                     $scope.results[questionid-1].correct = $scope.constants.CORRECT;
-                    $scope.pointsEarned += $scope.results[questionid-1].points
+                    $scope.pointsEarned += $scope.quiz[questionid-1].points;
+                    $scope.results[questionid-1].points = $scope.quiz[questionid-1].points;
                 }else{
                     $scope.results[questionid-1].correct=$scope.constants.INCORRECT;
+                    //decrement the number of earned points only if the current answer was reselected
+                    if ($scope.results[questionid-1].points>0) {
+                        $scope.pointsEarned -= $scope.quiz[questionid - 1].points;
+                    }
                     //set the point to zero if not correct
                     $scope.results[questionid-1].points=0;
                 }
             };
+
+            $scope.alerts=[];
+            $scope.closeAlert = function(index) {
+                $scope.alerts.splice(index, 1);
+            };
+
+
 
             //only show results if all questions are answered
             $scope.checkQuizCompleted = function(){
                 var len = $scope.quiz.length;
                 for(var i = 0; i<len;i++){
                     if ($scope.results[i].userChoice === null){
+                        $scope.alerts=[
+                            { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' }
+                        ];
                         return true;
                     }
                 }
+                $scope.alerts=[
+                    { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
+                ];
                 return false; //all radio are checked
 
             };
