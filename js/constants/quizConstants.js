@@ -7,5 +7,9 @@ angular.module('quizApp')
         YES: 'Да',
         NO: 'Нет',
         CORRECT: 'Молодец, Антоха!',
-        INCORRECT: 'Мимо'
+        INCORRECT: 'Мимо',
+        GОТPOINTS0: 'Получил ',
+        GOTPOINTS2: ' баллов из ',
+        GOTPOINTS3: ' возможных ',
+        NOTCOMPLETE: 'Ответь на пропущенные вопросы и попробуй опять.'
     });

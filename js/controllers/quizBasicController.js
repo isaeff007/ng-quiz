@@ -75,16 +75,22 @@ angular.module('quizApp')
                 for(var i = 0; i<len;i++){
                     if ($scope.results[i].userChoice === null){
                         $scope.alerts=[
-                            { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' }
+                            { type: 'danger', msg: QUIZCONSTANTS.NOTCOMPLETE }
                         ];
                         return true;
                     }
                 }
-                $scope.alerts=[
-                    { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
-                ];
+                //$scope.alerts=[
+                //    { type: 'success', msg: " "+$scope.pointsEarned +QUIZCONSTANTS.GOTPOINTS2+$scope.pointsToEarn+QUIZCONSTANTS.GOTPOINTS3  }
+                //];
+                $scope.alerts=[];
                 return false; //all radio are checked
 
             };
+
+            //reload page
+            $scope.reloadQuiz = function(){
+                location.reload();
+            }
 
         }]);

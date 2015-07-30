@@ -9,12 +9,15 @@
     <script src="bower_components/bootstrap/ui-bootstrap-tpls-0.13.0.min.js"></script>
 </head>
 <body>
+<div class="row">
+    <div class="col-sm-1" style="background-color:lavenderblush;">.</div>
+    <div class="col-sm-11" style="background-color:lavender;">
 <div ng-controller="quizBasicController">
     <p>File status: {{readstatus}}</p>
     <h2>{{title}}</h2>
     <form name="quiz">
         <div ng-repeat="question in quiz">
-            <strong>{{question._id}}.{{question.question}}</strong>
+            <strong>{{question._id}}. {{question.question}}</strong>
             <!-- create the true/false radio button for each question-->
             <br/>
             <div class="radiooption">
@@ -36,47 +39,36 @@
             </div>
             <br/>
         </div>
-        <!--<div ng-repeat="result in results">-->
-        <!--<p>{{result._id}}.{{result.answer}}</p>-->
-        <!--</div>-->
     </form>
-
     <hr/>
     <!--results section-->
-    <p>{{pointsEarned}}</p>
+    <!--<p>{{pointsEarned}}</p>-->
     <div ng-init="showAnswers=true">
-        <button ng-click="showAnswers=checkQuizCompleted()">Show results</button>
+        <button class="btn btn-sm btn-primary" type="button" ng-click="showAnswers=checkQuizCompleted()">Показать результат</button>
+        <button class="btn btn-sm btn-primary" type="button" ng-click="reloadQuiz()">Обновить страницу</button>
         <div>
-            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><b>{{alert.msg}}</b></alert>
         </div>
         <br/>
-        <br/>
         <div ng-hide="showAnswers">
-            <strong>Results</strong>
+            <pre><b>Баллы: {{pointsEarned}} / {{pointsToEarn}}</b></pre>
+            <!--now the ANGULAR UI for result bars splitted to success/erros-->
+            <progress class="progress-striped" max="pointsToEarn" animate="true">
+                <bar   value="100*pointsEarned/pointsToEarn" type="success"><b>{{pointsEarned}} </b></bar>
+                <bar   value="100-100*pointsEarned/pointsToEarn" type="danger"><b>{{pointsToEarn-pointsEarned}}</b></bar>
+            </progress>
             <div ng-repeat="result in results">
                 {{result._id}}. <span
                     ng-class="result.correct == constants.CORRECT ? 'correct' : 'incorrect'">
                {{result.correct}} ({{result.points}})
                </span>
             </div>
-            <p><strong>Points: </strong><span ng-class="'results'">{{pointsEarned}}/{{pointsToEarn}}</span></p>
-            <!--show the results as progress bar splitted to success/errors-->
-            <div class="progress">
-                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{pointsEarned}}"
-                     aria-valuemin="0" aria-valuemax="{{pointsToEarn}}" style="width:{{100*pointsEarned/pointsToEarn}}%">
-                    {{pointsEarned}} success
-                </div>
-                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{pointsToEarn-pointsEarned}}"
-                     aria-valuemin="0" aria-valuemax="{{pointsToEarn}}" style="width:{{100-100*pointsEarned/pointsToEarn}}%">
-                    {{pointsToEarn-pointsEarned}} errors
-                </div>
-            </div>
-            <!--now the ANGULAR UI-->
-            <div class="row">
-            <div class="col-sm-4"><progressbar class="progress-striped active" max="200" value="166" type="danger"><i>166 / 200</i></progressbar></div>
-            </div>
+            <!--<p><strong>Points: </strong><span ng-class="'results'">{{pointsEarned}}/{{pointsToEarn}}</span></p>-->
+
         </div>
 
+    </div>
+</div>
     </div>
 </div>
 </body>
