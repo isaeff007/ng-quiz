@@ -6,5 +6,5 @@ angular.module('quizApp')
 //so else the use of '$http' parameter is not mandatory.
     .factory('quizBasicFactory', ['$http', function($http){
         //firefox allows to use a local json file only if it in the same/sub directory
-        return $http.get('./data/book-01.json');
+        return $http.get('./data/book-02.json');
     }]);
