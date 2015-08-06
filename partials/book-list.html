@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <!--Sidebar content-->
+            <input ng-model="query" class="form-control" placeholder="Поиск">
+            <br/>
+            <select ng-model="orderProp" class="btn-primary">
+                <option value="name">по названию</option>
+                <option value="added">новые</option>
+            </select>
+            <p><br/>Всего книг: {{books.length}}</p>
+            <p><br/>Общий результат: {{totalResult.formattedPoints}}</p>
+            <progress class="progress-striped" max="totalResult.pointsToEarn" animate="true">
+                <bar   value="100*totalResult.pointsEarned/totalResult.pointsToEarn" type="success"><b>{{totalResult.pointsEarned}} </b></bar>
+                <bar   value="100-100*totalResult.pointsEarned/totalResult.pointsToEarn" type="danger"><b>{{totalResult.pointsToEarn-totalResult.pointsEarned}}</b></bar>
+            </progress>
+
+            <!--<p>File status: {{status}}</p>-->
+        </div>
+        <div class="col-md-10">
+            <p class="list-group">
+                <!--::books would the data will not be changed, so the $watcher is not needed for this element &ndash;&gt; performance profit-->
+                <li ng-repeat="book in books | filter:query | orderBy:orderProp">
+                    <!--<a href="#/books/{{book.id}}" class="img-responsive"><img ng-src="{{book.imageUrl}}"></a>-->
+                    <a href="#/books/{{book.id}}" class="list-group-item">
+                        <span class="badge">{{getResult4Book(book.id)}}</span>
+                        <h4>{{book.name}}</h4>{{book.author}}</a>
+                </li>
+            <!--Just show the books as a nice JSON format-->
+            <pre>{{books | filter:query|orderBy:orderProp|json}}</pre>
+            </div>
+        </div>
+    </div>
+</div>

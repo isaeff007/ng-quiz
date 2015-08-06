@@ -1,11 +1,14 @@
 /**
  * Created by ak on 19.05.2015.
  */
-angular.module('quizApp')
-    .controller('quizBasicController',['$scope','QUIZCONSTANTS', 'quizBasicFactory',
-        function ($scope, QUIZCONSTANTS,  quizBasicFactory  ) {
+
+quizApp
+    .controller('quizBasicController',['$scope','$routeParams','QUIZCONSTANTS', 'dataFactory',
+        function ($scope, $routeParams, QUIZCONSTANTS,  dataFactory  ) {
 
             $scope.constants = QUIZCONSTANTS;
+            //'/books/:bookID' All variables defined with the : notation are extracted into the $routeParams object.
+            $scope.bookID = $routeParams.bookID;
             $scope.title = null; // quiz title
             $scope.quiz = {}; // quiz questions
             $scope.results = []; // user results
@@ -13,7 +16,7 @@ angular.module('quizApp')
             $scope.pointsEarned =0;
             $scope.pointsToEarn=0;
 
-            quizBasicFactory.success(function(data, status) {
+            dataFactory.getBook($scope.bookID).success(function(data, status) {
                 //status 200
                 $scope.readstatus=status;
                 $scope.title = data.name;
