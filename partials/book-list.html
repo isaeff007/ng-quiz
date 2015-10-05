@@ -10,7 +10,7 @@
             </select>
             <p><br/>Всего книг: {{books.length}}</p>
             <p><br/>Общий результат: {{totalResult.formattedPoints}}</p>
-            <progress class="progress-striped" max="totalResult.pointsToEarn" animate="true">
+            <progress class="progress-bar-striped" max="totalResult.pointsToEarn" animate="true">
                 <bar   value="100*totalResult.pointsEarned/totalResult.pointsToEarn" type="success"><b>{{totalResult.pointsEarned}} </b></bar>
                 <bar   value="100-100*totalResult.pointsEarned/totalResult.pointsToEarn" type="danger"><b>{{totalResult.pointsToEarn-totalResult.pointsEarned}}</b></bar>
             </progress>
