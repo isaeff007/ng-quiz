@@ -8,21 +8,24 @@ quizApp
         //firefox allows to use a local json file only if it in the same/sub directory
         var bookFactory = {};
 
-        //retrieve the book list
+        //retrieve the book list via REST API from mongo DB
         bookFactory.getBooks = function () {
-            return $http.get('./books/books.json');
-        }
+            return $http.get("http://localhost:3000/books");
+            //return $http.get('./books/books.json');
+        };
 
         //get the selected book quiz
         bookFactory.getBook = function(bookID){
-            return $http.get('./books/'+bookID+'.json');
-        }
+            return $http.get("http://localhost:3000/books/"+bookID);
+            //return $http.get('./books/'+bookID+'.json');
+        };
 
         //get the quiz results for all books
         //retrieve the book list
         bookFactory.getResults = function () {
-            return $http.get('./books/results.json');
-        }
+            return $http.get("http://localhost:3000/results")
+            //return $http.get('./books/results.json');
+        };
 
         //return the factory as object with assigned methods.
         return bookFactory;

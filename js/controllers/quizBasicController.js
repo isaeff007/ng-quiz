@@ -10,7 +10,7 @@ quizApp
             //'/books/:bookID' All variables defined with the : notation are extracted into the $routeParams object.
             $scope.bookID = $routeParams.bookID;
             $scope.title = null; // quiz title
-            $scope.quiz = {}; // quiz questions
+            $scope.quiz = []; // quiz questions is an array because
             $scope.results = []; // user results
             $scope.readstatus = 33;
             $scope.pointsEarned =0;
@@ -18,10 +18,15 @@ quizApp
 
             dataFactory.getBook($scope.bookID).success(function(data, status) {
                 //status 200
+                //the data should consist of 1 array element (quiz for the selected book)
                 $scope.readstatus=status;
-                $scope.title = data.name;
-                $scope.quiz = data.questions;
-                createResults();
+                if (data.length == 1) {
+                    $scope.title = data[0].name;
+                    $scope.quiz = data[0].questions;
+                    createResults();
+                }else{
+                    $scope.title = "No book is found";
+                }
             }).
                 error(function(data, status) {
                     // status 404

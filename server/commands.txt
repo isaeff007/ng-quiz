@@ -1,0 +1,52 @@
+//to start the server
+$mongod
+
+
+//to cancel the session ctrl-C.  the find, findOne can not be executed, so start "mongod".
+
+//change to root
+$cd /
+//create the data directory needed for mongodb
+$sudo mkdir -p /data/db
+
+//give the permissions to directory (s. mongodb.lock error)
+sudo chown `id -u` /data/db
+
+
+//to import the books from json file
+mongoimport --host 127.0.0.1 --db quiz --collection books --jsonArray books.json
+//or for questions:
+mongoimport --host 127.0.0.1 --db quiz --collection questions test1.json
+  Note:
+  if the error occurs:
+  Failed: error processing document #1: invalid character 'ï' looking for beginning of value
+
+  --> make sure the file is saved in UTF-8 encoding (just open and save with an appropriate editor like notepad++/TextEdit)
+
+//after the books are imported - start mongo client to test the queries:
+$ mongo
+MongoDB shell version: 3.0.6
+connecting to: test
+
+//swith to our database "quiz" (s. import)
+> use quiz
+switched to db quiz
+
+//just display the first entry from "books" collection (aka table)
+>db.books.findOne()
+
+//return all entries:
+>db.books.find()
+
+//return the books having published after 1966 ("published > 1966)
+db.books.find({ published: { $gt: 1966 } })
+
+//show the existing databases
+$show dbs
+
+
+//-------- Start the app
+- start "$mongod"
+- start server.js
+
+- start "$mongo" to connect for database connection "quiz"

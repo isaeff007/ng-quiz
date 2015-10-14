@@ -1,0 +1,15 @@
+  [
+    {
+      "bookid": "wrungel",
+      "pointsToEarn": 90,
+      "pointsEarned": 75
+    },
+    { "bookid": "vstraneurokov1",
+      "pointsToEarn": 80,
+      "pointsEarned": 70
+    },
+    { "bookid": "vstraneurokov2",
+      "pointsToEarn": 80,
+      "pointsEarned": 75
+    }
+   ]
