@@ -3,11 +3,11 @@
  */
 //Controller to represent the list of books
 quizApp
-    .controller('bookListCtrl',['$scope', 'dataFactory',
+    .controller('BookListCtrl',['$scope', 'dataFactory',
         function ($scope , dataFactory  ) {
             $scope.status;
             $scope.books;
-            $scope.results;
+            $scope.results=[];
             $scope.totalResult={pointsEarned:0, pointsToEarn:0, formattedPoints:""};
 
             dataFactory.getBooks().success(function (bookdata, status){
@@ -44,7 +44,7 @@ quizApp
             //get the results for selected book
             $scope.getResult4Book = function(bookID){
                 var bookResult;
-                var formattedResult
+                var formattedResult;
 
                 if  ($scope.results.hasOwnProperty(bookID)) {
                     bookResult = $scope.results[bookID];

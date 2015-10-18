@@ -6,8 +6,6 @@
 var quizApp =angular.module('quizApp',[
     "ngRoute",
     'ui.bootstrap'
-    //'dataFactory'
-    //'quizBasicController'
 ]);
 
 quizApp.config(['$routeProvider',
@@ -15,12 +13,12 @@ quizApp.config(['$routeProvider',
         $routeProvider.
             when('/books', {
                 templateUrl: 'partials/book-list.html',
-                controller: 'bookListCtrl'
+                controller: 'BookListCtrl'
             }).
             //All variables defined with the : notation are extracted into the $routeParams (i.e. in controller function)
             when('/books/:bookID', {
                 templateUrl: 'partials/book-detail.html',
-                controller: 'quizBasicController'
+                controller: 'BookDetailCtrl'
             }).
             otherwise({
                 redirectTo: '/books'

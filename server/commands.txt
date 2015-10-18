@@ -6,7 +6,7 @@ $mongod
 
 //change to root
 $cd /
-//create the data directory needed for mongodb
+//create the data directory needed for mongodb (always the root directory)
 $sudo mkdir -p /data/db
 
 //give the permissions to directory (s. mongodb.lock error)
@@ -14,6 +14,7 @@ sudo chown `id -u` /data/db
 
 
 //to import the books from json file
+//Check the need of using "--jsonArray" option !
 mongoimport --host 127.0.0.1 --db quiz --collection books --jsonArray books.json
 //or for questions:
 mongoimport --host 127.0.0.1 --db quiz --collection questions test1.json
@@ -46,7 +47,7 @@ $show dbs
 
 
 //-------- Start the app
-- start "$mongod"
+- start "$mongod" (mongodb server)
 - start server.js
 
-- start "$mongo" to connect for database connection "quiz"
+- start "$mongo" to connect for database connection "quiz" (mongodb client)

@@ -2,18 +2,15 @@
  * Created by ak on 19.05.2015.
  */
 
-//inject for minifing
-BookListCtrl.$inject=['$scope', '$routeParams','QUIZCONSTANTS','dataFactory'];
-
 quizApp
-    .controller('BookDetailCtrl',
+    .controller('BookDetailCtrl',['$scope','$routeParams','QUIZCONSTANTS', 'dataFactory',
         function ($scope, $routeParams, QUIZCONSTANTS,  dataFactory  ) {
 
             $scope.constants = QUIZCONSTANTS;
             //'/books/:bookID' All variables defined with the : notation are extracted into the $routeParams object.
             $scope.bookID = $routeParams.bookID;
             $scope.title = null; // quiz title
-            $scope.quiz = {}; // quiz questions
+            $scope.quiz = []; // quiz questions is an array because
             $scope.results = []; // user results
             $scope.readstatus = 33;
             $scope.pointsEarned =0;
@@ -21,10 +18,15 @@ quizApp
 
             dataFactory.getBook($scope.bookID).success(function(data, status) {
                 //status 200
+                //the data should consist of 1 array element (quiz for the selected book)
                 $scope.readstatus=status;
-                $scope.title = data.name;
-                $scope.quiz = data.questions;
-                createResults();
+                if (data.length == 1) {
+                    $scope.title = data[0].name;
+                    $scope.quiz = data[0].questions;
+                    createResults();
+                }else{
+                    $scope.title = "No book is found";
+                }
             }).
                 error(function(data, status) {
                     // status 404
@@ -99,4 +101,4 @@ quizApp
                 location.reload();
             }
 
-        });
+        }]);
