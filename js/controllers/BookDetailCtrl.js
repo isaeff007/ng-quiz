@@ -3,8 +3,8 @@
  */
 
 quizApp
-    .controller('BookDetailCtrl',['$scope','$routeParams','QUIZCONSTANTS', 'dataFactory',
-        function ($scope, $routeParams, QUIZCONSTANTS,  dataFactory  ) {
+    .controller('BookDetailCtrl',['$scope','$routeParams', '$location', 'QUIZCONSTANTS', 'dataFactory',
+        function ($scope, $routeParams, $location, QUIZCONSTANTS,  dataFactory  ) {
 
             $scope.constants = QUIZCONSTANTS;
             //'/books/:bookID' All variables defined with the : notation are extracted into the $routeParams object.
@@ -99,6 +99,11 @@ quizApp
             //reload page
             $scope.reloadQuiz = function(){
                 location.reload();
-            }
+            };
+
+            //back to book list
+            $scope.cancel = function () {
+                $location.path("books/");
+            };
 
         }]);

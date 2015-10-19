@@ -21,9 +21,13 @@ quizApp
         };
 
         //get the quiz results for all books
-        //retrieve the book list
         bookFactory.getResults = function () {
             return $http.get("http://localhost:3000/results")
+            //return $http.get('./books/results.json');
+        };
+        //get the quiz results for specific book
+        bookFactory.getResults4Book = function (bookID) {
+            return $http.get("http://localhost:3000/results"+bookID);
             //return $http.get('./books/results.json');
         };
 

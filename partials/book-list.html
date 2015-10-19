@@ -17,7 +17,7 @@
 
             <!--<p>File status: {{status}}</p>-->
         </div>
-        <div class="col-md-10">
+        <div class="col-md-10" ng-if="resultsLoaded">
             <p class="list-group">
                 <!--::books would the data will not be changed, so the $watcher is not needed for this element &ndash;&gt; performance profit-->
                 <li ng-repeat="book in books | filter:query | orderBy:orderProp">

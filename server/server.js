@@ -75,12 +75,17 @@ app.get('/books/:id',function(req, res){
    })
 });
 
+//get results for all books
 app.get('/results', function(req, res){
    Results.find(function( err, doc){
       res.send(doc);
    });
-   //send for each request to root "/"  the hello message back as response.
-   //res.send('Hello from express, dude') ;
+});
+//get results for a specific book
+app.get('/results/:id', function(req, res){
+   Results.find({bookid : req.params.id} ,function( err, doc){
+      res.send(doc);
+   })
 });
 
 // listen (start app with node server.js) ======================================
