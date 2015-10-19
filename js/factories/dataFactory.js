@@ -26,9 +26,19 @@ quizApp
             //return $http.get('./books/results.json');
         };
         //get the quiz results for specific book
-        bookFactory.getResults4Book = function (bookID) {
+        bookFactory.getBookResult = function (bookID) {
             return $http.get("http://localhost:3000/results"+bookID);
             //return $http.get('./books/results.json');
+        };
+
+        //save results for an specific book
+        bookFactory.updateBookResults = function(bookResult){
+            return $http.put("http://localhost:3000/results/"+bookResult.bookID, bookResult);
+            //return $http.get('./books/'+bookID+'.json');
+        };
+
+        bookFactory.createBookResults = function(){
+
         };
 
         //return the factory as object with assigned methods.

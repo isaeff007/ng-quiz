@@ -6,6 +6,7 @@
             <button class="btn btn-sm btn-primary" type="button" ng-click="showAnswers=checkQuizCompleted()">Показать результат</button>
             <button class="btn btn-sm btn-primary" type="button" ng-click="reloadQuiz()">Обновить страницу</button>
             <button class="btn btn-sm btn-primary" type="button" ng-click="cancel()">К списку</button>
+            <button class="btn btn-sm btn-primary" type="button" ng-click="updateResult()">К списку</button>
             <div>
                 <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><b>{{alert.msg}}</b></alert>
             </div>

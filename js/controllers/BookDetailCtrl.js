@@ -16,6 +16,12 @@ quizApp
             $scope.pointsEarned =0;
             $scope.pointsToEarn=0;
 
+            function BookResult(){
+                this.bookID=$scope.bookID;
+                this.pointsToEarn=$scope.pointsToEarn;
+                this.pointsEarned=$scope.pointsEarned;
+            }
+
             dataFactory.getBook($scope.bookID).success(function(data, status) {
                 //status 200
                 //the data should consist of 1 array element (quiz for the selected book)
@@ -104,6 +110,16 @@ quizApp
             //back to book list
             $scope.cancel = function () {
                 $location.path("books/");
+            };
+
+            //update result for current book
+            $scope.updateResult = function() {
+                var bookResult = new BookResult();
+                if (bookResult.pointsEarned > 0 && bookResult.pointsToEarn > 0){
+                    dataFactory.updateBookResults(new BookResult());
+                } else{
+                    console.log("no book result availiable for "+bookResult.bookID);
+                }
             };
 
         }]);

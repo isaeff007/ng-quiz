@@ -23,6 +23,7 @@ quizApp
                 $scope.results = resultdata;
                 $scope.status = status;
                 createTotalResult();
+                  //to wait in the "ng-if" directive avoiding the NPE in getBookResult()
                 $scope.resultsLoaded = true;
             })
                 .error(function(error){
@@ -46,7 +47,7 @@ quizApp
 
 
             //get the results for selected book iterating over results array
-            $scope.getResult4Book = function(bookID) {
+            $scope.getBookResult = function(bookID) {
                 var formattedResult = "---";
                 if ($scope.results.length > 0) {
                     for(var idx in $scope.results){

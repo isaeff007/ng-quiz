@@ -10,6 +10,9 @@ var morgan = require('morgan');             // log requests to the console (expr
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
 // configuration =================
 
 mongoose.connect('mongodb://localhost/quiz');     // connect to quiz database created by import (s commands.txt)
@@ -81,11 +84,21 @@ app.get('/results', function(req, res){
       res.send(doc);
    });
 });
-//get results for a specific book
-app.get('/results/:id', function(req, res){
-   Results.find({bookid : req.params.id} ,function( err, doc){
-      res.send(doc);
-   })
+//update book results
+app.put('/results/:id', function(req, res){
+   Results.findById( req.params.id , function(err, result){
+      result.pointsToEarn = req.body.pointsToEarn;
+      result.pointsEarned = req.body.pointsEarned;
+      return result.save(function(err){
+         if (!err) {
+            console.log("book result successfully updated");
+         } else {
+            console.log(err);
+         }
+         return res.send(result);
+      })
+   });
+
 });
 
 // listen (start app with node server.js) ======================================
