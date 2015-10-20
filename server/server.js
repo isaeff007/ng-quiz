@@ -13,62 +13,23 @@ var methodOverride = require('method-override'); // simulate DELETE and PUT (exp
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-// configuration =================
+// configuration ======================================
 
 mongoose.connect('mongodb://localhost/quiz');     // connect to quiz database created by import (s commands.txt)
 
-//define models to store the data from database collections.
-
-/* Books */
-var bookMoodel ={
-   added : String,
-   id : String,
-   imageUrl: String,
-   name: String,
-   author: String,
-   published: Number
-};
-
-
-/* question model for a book*/
-var questionModel = {
-   "name": String,
-   "bookid": String,
-   "questions": [
-      {
-         "_id":      Number,
-         "question": String,
-         "answer":   Boolean,
-         "points":   Number
-      }
-       ]
-};
-
-/* result model for a book*/
-var resultModel = {
-   "bookid": String,
-   "pointsToEarn": Number,
-   "pointsEarned": Number
-};
+//import the  models to store the data from database collections.
+var Book = require("./models/book.js");
+var Questions = require("./models/questions.js");
+var Results = require("./models/results.js")
 
 //allow to access from all origns (can be restricted later for specific routes)
 app.use(cors());
 
-//map the book model with the collection "books".
-var Book = mongoose.model("Book", bookMoodel, "books");
-//map the question  model with the collection "questions".
-var Questions = mongoose.model("Questions", questionModel, "questions");
-//map the result  model with the collection "results".
-var Results = mongoose.model("Results", resultModel, "results");
-
-
-// express REST API part =======================
+// express REST API part ===============================
 app.get('/books', function(req, res){
    Book.find(function( err, doc){
       res.send(doc);
    });
-   //send for each request to root "/"  the hello message back as response.
-   //res.send('Hello from express, dude') ;
 });
 
 //get all avail. questions for selected book id (don' use the $eq operator with strings)
@@ -84,22 +45,41 @@ app.get('/results', function(req, res){
       res.send(doc);
    });
 });
-//update book results
-app.put('/results/:id', function(req, res){
-   Results.findById( req.params.id , function(err, result){
-      result.pointsToEarn = req.body.pointsToEarn;
-      result.pointsEarned = req.body.pointsEarned;
-      return result.save(function(err){
-         if (!err) {
-            console.log("book result successfully updated");
-         } else {
-            console.log(err);
-         }
-         return res.send(result);
-      })
-   });
 
+//update results for specific book
+app.put('/results/:id', function(req, res){
+   Results.findOneAndUpdate( {bookid: req.params.id} ,{
+      "pointsToEarn" : req.body.pointsToEarn,
+      "pointsEarned" : req.body.pointsEarned
+   } ,function(err, bookResult){
+      if (err) throw err;
+      console.log("Successfully updated: "+ bookResult);
+   });
 });
+
+//update book results
+//Deactivated because of "bookResult"  has no method 'save' -Error. s. alternative
+/*
+ app.put('/results/:id', function(req, res){
+ Results.find( {bookid: req.params.id} , function(err, bookResult){
+ if (err) throw err;
+ console.log(bookResult);
+ bookResult.pointsToEarn = req.body.pointsToEarn;
+ bookResult.pointsEarned = req.body.pointsEarned;
+ return bookResult.save(function(err){
+ if (!err) {
+ console.log("book result successfully updated");
+ } else {
+ console.log(err);
+ }
+ return res.send(bookResult);
+ })
+ });
+
+ });
+ */
+
+
 
 // listen (start app with node server.js) ======================================
 app.listen(3000);
