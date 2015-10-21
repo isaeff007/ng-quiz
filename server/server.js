@@ -39,6 +39,29 @@ app.get('/books/:id',function(req, res){
    })
 });
 
+//insert the new book to the list
+app.post('books/:id',function(req, res){
+    //create a new instance for a bookmodel (data holder)
+    var book = new Book();
+    //set the properties with  POST data coming from client
+    book.id=req.body.id;
+    book.name==req.body.name;
+    book.added = req.body.added;
+    book.published=req.body.published;
+    book.imageUrl=req.body.imageUrl;
+    book.author=req.body.author;
+
+    //save the instance (save() is embedded) and check the errors.
+    book.save(function(err){
+        if (err) throw err;
+         res.json({message: 'new book added to list', data: book})
+    })
+
+
+});
+
+
+
 //get results for all books
 app.get('/results', function(req, res){
    Results.find(function( err, doc){

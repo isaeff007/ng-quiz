@@ -23,7 +23,6 @@ quizApp
             }
 
             dataFactory.getBook($scope.bookID).success(function(data, status) {
-                //status 200
                 //the data should consist of 1 array element (quiz for the selected book)
                 $scope.readstatus=status;
                 if (data.length == 1) {

@@ -10,3 +10,7 @@ to install the app (node.js installation is required):
 	(the "bower_components" directory with dependencies should be created.)
 	
  3.  load the index.html
+ 
+ ------- Server part -------------
+ change to "server" directory (with package.json)
+ 1. $npm install  (to install express etc.)
