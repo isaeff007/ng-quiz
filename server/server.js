@@ -2,6 +2,7 @@
  * Created by ak on 08/10/15.
  */
 // set up ========================
+var config = require('./config');
 var express  = require('express');
 var app      = express();                               // create our app w/ express
 var mongoose = require('mongoose');                     // mongoose for mongodb
@@ -13,14 +14,16 @@ var methodOverride = require('method-override'); // simulate DELETE and PUT (exp
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-// configuration ======================================
-
-mongoose.connect('mongodb://localhost/quiz');     // connect to quiz database created by import (s commands.txt)
-
 //import the  models to store the data from database collections.
-var Book = require("./models/book.js");
-var Questions = require("./models/questions.js");
-var Results = require("./models/results.js")
+var Book = require("./models/book");
+var Questions = require("./models/questions");
+var Results = require("./models/results");
+
+// configuration ======================================
+var port = process.env.PORT || 3000;
+//set the "dbUrl" to the mongodb url that corresponds to the environment we are currently in
+app.set('dbUrl', config.db[app.settings.env]);
+mongoose.connect(app.get('dbUrl'));
 
 //allow to access from all origns (can be restricted later for specific routes)
 app.use(cors());
@@ -34,14 +37,15 @@ app.get('/books', function(req, res){
 
 //get all avail. questions for selected book id (don' use the $eq operator with strings)
 app.get('/books/:id',function(req, res){
-   Questions.find({ bookid : req.params.id}, function (err, doc){
-      res.send(doc);
+   Questions.find({ bookid : req.params.id}, function (err, books){
+      if (err) throw err;
+      res.send(books);
    })
 });
 
 //insert the new book to the list
 app.post('books/:id',function(req, res){
-    //create a new instance for a bookmodel (data holder)
+    //create a new instance for a book  (data holder)
     var book = new Book();
     //set the properties with  POST data coming from client
     book.id=req.body.id;
@@ -59,8 +63,6 @@ app.post('books/:id',function(req, res){
 
 
 });
-
-
 
 //get results for all books
 app.get('/results', function(req, res){
@@ -101,9 +103,6 @@ app.put('/results/:id', function(req, res){
 
  });
  */
-
-
-
 // listen (start app with node server.js) ======================================
-app.listen(3000);
-console.log("App listening on port 3000");
+app.listen(port);
+console.log("App listening on port "+port);

@@ -6,7 +6,6 @@
             <button class="btn btn-sm btn-primary" type="button" ng-click="showAnswers=checkQuizCompleted()">Показать результат</button>
             <button class="btn btn-sm btn-primary" type="button" ng-click="reloadQuiz()">Обновить страницу</button>
             <button class="btn btn-sm btn-primary" type="button" ng-click="cancel()">К списку</button>
-            <button class="btn btn-sm btn-primary" type="button" ng-click="updateResult()">Запомнить</button>
             <div>
                 <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><b>{{alert.msg}}</b></alert>
             </div>
@@ -25,40 +24,40 @@
                {{result.correct}} ({{result.points}})
                </span>
                 </div>
-                <!--<p><strong>Points: </strong><span ng-class="'results'">{{pointsEarned}}/{{pointsToEarn}}</span></p>-->
-
+                <br/>
+                <button class="btn btn-sm btn-primary" type="button" ng-click="updateResult()">Запомнить результат</button>
             </div>
         </div>
     </div>
     <div class="col-sm-9" style="background-color:lavender;">
-            <p>File status: {{readstatus}}</p>
-            <h2>{{title}}</h2>
-            <form name="quiz">
-                <div ng-repeat="question in quiz">
-                    <strong>{{question._id}}. {{question.question}}</strong>
-                    <!-- create the true/false radio button for each question-->
+        <p>File status: {{readstatus}}</p>
+        <h2>{{title}}</h2>
+        <form name="quiz">
+            <div ng-repeat="question in quiz">
+                <strong>{{question._id}}. {{question.question}}</strong>
+                <!-- create the true/false radio button for each question-->
+                <br/>
+                <div class="radiooption">
+                    <input required
+                           name="_id{{question._id}}"
+                           type="radio"
+                           value="true"
+                           ng-model="question.userChoice"
+                           ng-change="$parent.checkUserChoice(question._id, true)"/>
+                    <label for="_id{{question._id}}">{{constants.YES}}</label>
                     <br/>
-                    <div class="radiooption">
-                        <input required
-                               name="_id{{question._id}}"
-                               type="radio"
-                               value="true"
-                               ng-model="question.userChoice"
-                               ng-change="$parent.checkUserChoice(question._id, true)"/>
-                        <label for="_id{{question._id}}">{{constants.YES}}</label>
-                        <br/>
-                        <input required
-                               name="_id{{question._id}}"
-                               type="radio"
-                               value="false"
-                               ng-model="question.userChoice"
-                               ng-change="$parent.checkUserChoice(question._id,false)"/>
-                        <label for="_id{{question._id}}">{{constants.NO}}</label>
-                    </div>
-                    <br/>
+                    <input required
+                           name="_id{{question._id}}"
+                           type="radio"
+                           value="false"
+                           ng-model="question.userChoice"
+                           ng-change="$parent.checkUserChoice(question._id,false)"/>
+                    <label for="_id{{question._id}}">{{constants.NO}}</label>
                 </div>
-            </form>
-            <hr/>
+                <br/>
+            </div>
+        </form>
+        <hr/>
 
 
     </div>
