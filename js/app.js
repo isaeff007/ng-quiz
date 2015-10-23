@@ -20,6 +20,10 @@ quizApp.config(['$routeProvider',
                 templateUrl: 'partials/book-detail.html',
                 controller: 'BookDetailCtrl'
             }).
+            when('/book/new', {
+                templateUrl: 'partials/book-form.html',
+                controller: 'BookFormCtrl as bfc'
+            }).
             otherwise({
                 redirectTo: '/books'
             });

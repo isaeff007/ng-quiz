@@ -11,34 +11,29 @@ quizApp
         //retrieve the book list via REST API from mongo DB
         bookFactory.getBooks = function () {
             return $http.get("http://localhost:3000/books");
-            //return $http.get('./books/books.json');
         };
 
         //get the selected book quiz
         bookFactory.getBook = function(bookID){
             return $http.get("http://localhost:3000/books/"+bookID);
-            //return $http.get('./books/'+bookID+'.json');
         };
 
         //get the quiz results for all books
         bookFactory.getResults = function () {
-            return $http.get("http://localhost:3000/results")
-            //return $http.get('./books/results.json');
+            return $http.get("http://localhost:3000/results");
         };
         //get the quiz results for specific book
         bookFactory.getBookResult = function (bookID) {
             return $http.get("http://localhost:3000/results"+bookID);
-            //return $http.get('./books/results.json');
         };
 
         //save results for an specific book
         bookFactory.updateBookResults = function(bookResult){
             return $http.put("http://localhost:3000/results/"+bookResult.bookID, bookResult);
-            //return $http.get('./books/'+bookID+'.json');
         };
 
-        bookFactory.createBookResults = function(){
-
+        bookFactory.createBook = function(newBook){
+            return $http.post("http://localhost:3000/book/new", newBook);
         };
 
         //return the factory as object with assigned methods.
