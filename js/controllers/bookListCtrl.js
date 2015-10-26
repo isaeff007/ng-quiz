@@ -2,64 +2,69 @@
  * Created by ak on 03.08.2015.
  */
 //Controller to represent the list of books
-quizApp
-    .controller('BookListCtrl',['$scope', 'dataFactory',
-        function ($scope , dataFactory  ) {
-            $scope.status;
-            $scope.books;
-            $scope.results=[];
-            $scope.totalResult={pointsEarned:0, pointsToEarn:0, formattedPoints:""};
-            $scope.resultsLoaded=false;
-
-            dataFactory.getBooks().success(function (bookdata, status){
-                  $scope.books = bookdata;
-                  $scope.status = status;
-                })
-                    .error(function(error){
-                        $scope.status='unable to load book list: '+error.message;
-                    });
-
-              dataFactory.getResults().success(function (resultdata, status){
-                $scope.results = resultdata;
-                $scope.status = status;
-                createTotalResult();
-                  //to wait in the "ng-if" directive avoiding the NPE in getBookResult()
-                $scope.resultsLoaded = true;
-            })
-                .error(function(error){
-                    $scope.status='unable to load results: '+error.message;
-                });
+BookListCtrl.$inject =['dataFactory'];
 
 
-            //get the total results
-            createTotalResult = function (){
-                if ($scope.results.length>0) {
-                    for (var key in $scope.results) {
-                        if ($scope.results.hasOwnProperty(key)) {
-                            var bookresult = $scope.results[key];
-                            $scope.totalResult.pointsEarned += bookresult.pointsEarned;
-                            $scope.totalResult.pointsToEarn += bookresult.pointsToEarn;
-                        }
-                    }
+function BookListCtrl(dataFactory){
+    ctrl = this;
+
+    ctrl.status;
+    ctrl.books;
+    ctrl.results=[];
+    ctrl.totalResult={pointsEarned:0, pointsToEarn:0, formattedPoints:""};
+    ctrl.resultsLoaded=false;
+
+    dataFactory.getBooks().success(function (bookdata, status){
+        ctrl.books = bookdata;
+        ctrl.status = status;
+    })
+        .error(function(error){
+            ctrl.status='unable to load book list: '+error.message;
+        });
+
+    dataFactory.getResults().success(function (resultdata, status){
+        ctrl.results = resultdata;
+        ctrl.status = status;
+        createTotalResult();
+        //to wait in the "ng-if" directive avoiding the NPE in getBookResult()
+        ctrl.resultsLoaded = true;
+    })
+        .error(function(error){
+            ctrl.status='unable to load results: '+error.message;
+        });
+
+
+    //get the total results (private function)
+    function createTotalResult (){
+        if (ctrl.results.length>0) {
+            for (var key in ctrl.results) {
+                if (ctrl.results.hasOwnProperty(key)) {
+                    var bookresult = ctrl.results[key];
+                    ctrl.totalResult.pointsEarned += bookresult.pointsEarned;
+                    ctrl.totalResult.pointsToEarn += bookresult.pointsToEarn;
                 }
-                $scope.totalResult.formattedPoints=$scope.totalResult.pointsEarned + " / " + $scope.totalResult.pointsToEarn;
-            };
+            }
+        }
+        ctrl.totalResult.formattedPoints=ctrl.totalResult.pointsEarned + " / " + ctrl.totalResult.pointsToEarn;
+    }
 
 
-            //get the results for selected book iterating over results array
-            $scope.getBookResult = function(bookID) {
-                var formattedResult = "---";
-                if ($scope.results.length > 0) {
-                    for(var idx in $scope.results){
-                        if ($scope.results[idx].bookid == bookID) {
-                            formattedResult = $scope.results[idx].pointsEarned + " / " + $scope.results[idx].pointsToEarn;
-                        }
-                    }
+    //get the results for selected book iterating over results array
+    ctrl.getBookResult = function(bookID) {
+        var formattedResult = "---";
+        if (ctrl.results.length > 0) {
+            for(var idx in ctrl.results){
+                if (ctrl.results[idx].bookid == bookID) {
+                    formattedResult = ctrl.results[idx].pointsEarned + " / " + ctrl.results[idx].pointsToEarn;
                 }
-                return formattedResult;
-            };
+            }
+        }
+        return formattedResult;
+    };
 
-            $scope.orderProp="added";
+    ctrl.orderProp="added";
+}
 
-        }]);
+
+quizApp.controller('BookListCtrl', BookListCtrl);
 

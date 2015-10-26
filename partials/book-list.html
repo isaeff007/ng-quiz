@@ -4,30 +4,30 @@
             <!--Sidebar content-->
             <input ng-model="query" class="form-control" placeholder="Поиск">
             <br/>
-            <select ng-model="orderProp" class="btn-primary">
+            <select ng-model="blc.orderProp" class="btn-primary">
                 <option value="name">по названию</option>
                 <option value="added">новые</option>
             </select>
-            <p><br/>Всего книг: {{books.length}}</p>
-            <p><br/>Общий результат: {{totalResult.formattedPoints}}</p>
-            <progress class="progress-bar-striped" max="totalResult.pointsToEarn" animate="true">
-                <bar   value="100*totalResult.pointsEarned/totalResult.pointsToEarn" type="success"><b>{{totalResult.pointsEarned}} </b></bar>
-                <bar   value="100-100*totalResult.pointsEarned/totalResult.pointsToEarn" type="danger"><b>{{totalResult.pointsToEarn-totalResult.pointsEarned}}</b></bar>
+            <p><br/>Всего книг: {{blc.books.length}}</p>
+            <p><br/>Общий результат: {{blc.totalResult.formattedPoints}}</p>
+            <progress class="progress-bar-striped" max="blc.totalResult.pointsToEarn" animate="true">
+                <bar   value="100*blc.totalResult.pointsEarned/blc.totalResult.pointsToEarn" type="success"><b>{{blc.totalResult.pointsEarned}} </b></bar>
+                <bar   value="100-100*blc.totalResult.pointsEarned/blc.totalResult.pointsToEarn" type="danger"><b>{{blc.totalResult.pointsToEarn-blc.totalResult.pointsEarned}}</b></bar>
             </progress>
 
             <!--<p>File status: {{status}}</p>-->
         </div>
-        <div class="col-md-10" ng-if="resultsLoaded">
+        <div class="col-md-10" ng-if="blc.resultsLoaded">
             <p class="list-group">
                 <!--::books would the data will not be changed, so the $watcher is not needed for this element &ndash;&gt; performance profit-->
-                <li ng-repeat="book in books | filter:query | orderBy:orderProp">
+                <li ng-repeat="book in blc.books | filter:query | orderBy:blc.orderProp">
                     <!--<a href="#/books/{{book.id}}" class="img-responsive"><img ng-src="{{book.imageUrl}}"></a>-->
                     <a href="#/books/{{book.id}}" class="list-group-item">
-                        <span class="badge">{{getBookResult(book.id)}}</span>
+                        <span class="badge">{{blc.getBookResult(book.id)}}</span>
                         <h4>{{book.name}}</h4>{{book.author}}</a>
                 </li>
             <!--Just show the books as a nice JSON format-->
-            <pre>{{books | filter:query|orderBy:orderProp|json}}</pre>
+            <pre>{{blc.books | filter:query|orderBy:blc.orderProp|json}}</pre>
             </div>
         </div>
     </div>

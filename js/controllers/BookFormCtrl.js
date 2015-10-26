@@ -1,10 +1,12 @@
 /**
  * Created by ak on 23.10.2015.
  */
-quizApp.controller('BookFormCtrl', ['dataFactory', function( dataFactory){
+BookFormCtrl.$inject=['dataFactory'];
 
+function BookFormCtrl(dataFactory){
     ctrl = this;
 
+    //use as a DTO for server api
     function Book(){
         this.added= new Date().toJSON().slice(0,10);
         this.id='default id';
@@ -16,5 +18,6 @@ quizApp.controller('BookFormCtrl', ['dataFactory', function( dataFactory){
 
     ctrl.newbook = new Book();
 
+}
 
-}]);
+quizApp.controller('BookFormCtrl',BookFormCtrl);

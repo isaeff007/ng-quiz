@@ -13,12 +13,12 @@ quizApp.config(['$routeProvider',
         $routeProvider.
             when('/books', {
                 templateUrl: 'partials/book-list.html',
-                controller: 'BookListCtrl'
+                controller: 'BookListCtrl as blc'
             }).
             //All variables defined with the : notation are extracted into the $routeParams (i.e. in controller function)
             when('/books/:bookID', {
                 templateUrl: 'partials/book-detail.html',
-                controller: 'BookDetailCtrl'
+                controller: 'BookDetailCtrl as bdc'
             }).
             when('/book/new', {
                 templateUrl: 'partials/book-form.html',
