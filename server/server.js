@@ -44,12 +44,12 @@ app.get('/books/:id',function(req, res){
 });
 
 //insert the new book to the list
-app.post('books/:id',function(req, res){
+app.post('/book/new',function(req, res){
     //create a new instance for a book  (data holder)
     var book = new Book();
     //set the properties with  POST data coming from client
     book.id=req.body.id;
-    book.name==req.body.name;
+    book.name=req.body.name;
     book.added = req.body.added;
     book.published=req.body.published;
     book.imageUrl=req.body.imageUrl;
