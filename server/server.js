@@ -44,7 +44,7 @@ app.get('/books/:id',function(req, res){
 });
 
 //insert the new book to the list
-app.post('/book/new',function(req, res){
+app.post('/books',function(req, res){
     //create a new instance for a book  (data holder)
     var book = new Book();
     //set the properties with  POST data coming from client

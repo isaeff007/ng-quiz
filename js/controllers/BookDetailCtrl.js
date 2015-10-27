@@ -4,7 +4,7 @@
 BookDetailCtrl.$inject = ['$routeParams', '$location', 'QUIZCONSTANTS', 'dataFactory'];
 
 function BookDetailCtrl ($routeParams, $location, QUIZCONSTANTS,  dataFactory  ) {
-    ctrl = this;
+    var ctrl = this;
 
     ctrl.constants = QUIZCONSTANTS;
     //'/books/:bookID' All variables defined with the : notation are extracted into the $routeParams object.
@@ -21,6 +21,13 @@ function BookDetailCtrl ($routeParams, $location, QUIZCONSTANTS,  dataFactory  )
         this.pointsToEarn=ctrl.pointsToEarn;
         this.pointsEarned=ctrl.pointsEarned;
     }
+
+    //functions as bindable members
+    ctrl.checkUserChoice = checkUserChoice;
+    ctrl.closeAlert = closeAlert;
+    ctrl.checkQuizCompleted = checkQuizCompleted;
+    ctrl.updateResult = updateResult;
+
 
     dataFactory.getBook(ctrl.bookID).success(function(data, status) {
         //the data should consist of 1 array element (quiz for the selected book)
@@ -56,7 +63,8 @@ function BookDetailCtrl ($routeParams, $location, QUIZCONSTANTS,  dataFactory  )
     }
 
     //assign and check user choice (accessible from html)
-    ctrl.checkUserChoice = function(questionid , userChoice ){
+
+    function checkUserChoice(questionid , userChoice ){
         console.log('QuestionID '+questionid);
         ctrl.results[questionid-1].userChoice = userChoice;
         //check the userChoice against the correct answer
@@ -73,17 +81,18 @@ function BookDetailCtrl ($routeParams, $location, QUIZCONSTANTS,  dataFactory  )
             //set the point to zero if not correct
             ctrl.results[questionid-1].points=0;
         }
-    };
+    }
 
     ctrl.alerts=[];
-    ctrl.closeAlert = function(index) {
+
+    function closeAlert(index) {
         ctrl.alerts.splice(index, 1);
-    };
+    }
 
 
 
     //only show results if all questions are answered
-    ctrl.checkQuizCompleted = function(){
+    function checkQuizCompleted(){
         var len = ctrl.quiz.length;
         for(var i = 0; i<len;i++){
             if (ctrl.results[i].userChoice === null){
@@ -99,7 +108,7 @@ function BookDetailCtrl ($routeParams, $location, QUIZCONSTANTS,  dataFactory  )
         ctrl.alerts=[];
         return false; //all radio are checked
 
-    };
+    }
 
     //reload page
     ctrl.reloadQuiz = function(){
@@ -112,14 +121,14 @@ function BookDetailCtrl ($routeParams, $location, QUIZCONSTANTS,  dataFactory  )
     };
 
     //update result for current book
-    ctrl.updateResult = function() {
+   function updateResult() {
         var bookResult = new BookResult();
         if (bookResult.pointsEarned > 0 && bookResult.pointsToEarn > 0){
             dataFactory.updateBookResults(new BookResult());
         } else{
             console.log("no book result availiable for "+bookResult.bookID);
         }
-    };
+    }
 
 }
 

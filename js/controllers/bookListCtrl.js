@@ -6,32 +6,20 @@ BookListCtrl.$inject =['dataFactory'];
 
 
 function BookListCtrl(dataFactory){
-    ctrl = this;
+    var ctrl = this;
 
     ctrl.status;
     ctrl.books;
     ctrl.results=[];
     ctrl.totalResult={pointsEarned:0, pointsToEarn:0, formattedPoints:""};
     ctrl.resultsLoaded=false;
+    ctrl.orderProp="added";
 
-    dataFactory.getBooks().success(function (bookdata, status){
-        ctrl.books = bookdata;
-        ctrl.status = status;
-    })
-        .error(function(error){
-            ctrl.status='unable to load book list: '+error.message;
-        });
+    //get the data from factory and init the variables
+    activate();
 
-    dataFactory.getResults().success(function (resultdata, status){
-        ctrl.results = resultdata;
-        ctrl.status = status;
-        createTotalResult();
-        //to wait in the "ng-if" directive avoiding the NPE in getBookResult()
-        ctrl.resultsLoaded = true;
-    })
-        .error(function(error){
-            ctrl.status='unable to load results: '+error.message;
-        });
+    //functions as bindable members
+    ctrl.getBookResult = getBookResult;
 
 
     //get the total results (private function)
@@ -50,7 +38,7 @@ function BookListCtrl(dataFactory){
 
 
     //get the results for selected book iterating over results array
-    ctrl.getBookResult = function(bookID) {
+     function getBookResult(bookID) {
         var formattedResult = "---";
         if (ctrl.results.length > 0) {
             for(var idx in ctrl.results){
@@ -60,9 +48,31 @@ function BookListCtrl(dataFactory){
             }
         }
         return formattedResult;
-    };
+    }
 
-    ctrl.orderProp="added";
+
+    //get the data via abstracted data factory
+    function activate(){
+
+        dataFactory.getBooks().success(function (bookdata, status){
+            ctrl.books = bookdata;
+            ctrl.status = status;
+        })
+            .error(function(error){
+                ctrl.status='unable to load book list: '+error.message;
+            });
+
+        dataFactory.getResults().success(function (resultdata, status){
+            ctrl.results = resultdata;
+            ctrl.status = status;
+            createTotalResult();
+            //to wait in the "ng-if" directive avoiding the NPE in getBookResult()
+            ctrl.resultsLoaded = true;
+        })
+            .error(function(error){
+                ctrl.status='unable to load results: '+error.message;
+            });
+    }
 }
 
 

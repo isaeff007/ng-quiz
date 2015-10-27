@@ -4,7 +4,7 @@
 BookFormCtrl.$inject=['dataFactory'];
 
 function BookFormCtrl(dataFactory){
-    ctrl = this;
+    var ctrl = this;
 
     //use as a DTO for server api
     function Book(){
@@ -16,17 +16,20 @@ function BookFormCtrl(dataFactory){
         this.published=0;
     }
 
+    ctrl.save = save();
+
     //the object wil be filled in the form
     ctrl.newbook = new Book();
 
-    ctrl.save = function() {
+
+    function save() {
 
         if (ctrl.newbook.id){
             dataFactory.createBook(ctrl.newbook);
         } else{
             console.log("new book is not valid");
         }
-    };
+    }
 
 }
 
