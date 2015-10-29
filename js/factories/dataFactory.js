@@ -3,6 +3,8 @@
  */
 //the '$http' inject annotation does not get minify and so the according service can be found by injector.
 //so else the use of '$http' parameter is not mandatory.
+'use strict';
+
 dataFactory.$inject=['$http'];
 
 function dataFactory($http){

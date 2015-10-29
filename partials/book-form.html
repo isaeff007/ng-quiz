@@ -1,42 +1,58 @@
 <div class="container">
-    <h2>Horizontal form</h2>
-    <form class="form-horizontal" role="form">
-        <div class="form-group">
-        <label class="control-label col-sm-2" for="bfc.newbook.id">Идентификатор:</label>
-        <div class="col-sm-10">
-            <input type="text" ng-model="bfc.newbook.id" class="form-control" id="bfc.newbook.id" placeholder="Однозначный идентификатор (латинскими буквами)">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h2 class="panel-title">{{bfc.newbook.name}}</h2>
         </div>
-            </div>
-        <div class="form-group">
-                <label class="control-label col-sm-2" for="bfc.newbook.name">Название:</label>
-                <div class="col-sm-10">
-                    <input type="text" ng-model="bfc.newbook.name" class="form-control" id="bfc.newbook.name" placeholder="Внесите название">
+        <div class="panel-body">
+            <form class="form-horizontal" ng-submit=bfc.save() novalidate="novalidate" name="bookForm">
+
+                <div class="form-group" ng-class="{'has-error' : bookForm.idField.$touched && bookForm.idField.$invalid}">
+                    <label class="control-label col-sm-2" for="bfc.newbook.id">Идентификатор:</label>
+                    <div class="col-sm-6">
+                        <input type="text" ng-model="bfc.newbook.id" class="form-control" id="bfc.newbook.id" name="idField" required>
+                        <span ng-messages="bookForm.idField.$error" class="help-block" ng-show="bookForm.idField.$touched">
+                             <span ng-message="required">укажите Идентификатор</span>
+                        </span>
+                    </div>
                 </div>
-        </div>
-        <div class="form-group">
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="bfc.newbook.author">Автор:</label>
-                <div class="col-sm-10">
-                    <input type="text" ng-model="bfc.newbook.author" class="form-control" id="bfc.newbook.author" placeholder="Внесите автора">
+                <div class="form-group" ng-class="{'has-error' : bookForm.nameField.$touched && bookForm.nameField.$invalid}">
+                    <label class="control-label col-sm-2" for="bfc.newbook.name">Название:</label>
+                    <div class="col-sm-8">
+                        <input type="text" ng-model="bfc.newbook.name" class="form-control" id="bfc.newbook.name" name="nameField" required>
+                        <span ng-messages="bookForm.nameField.$error" class="help-block" ng-show="bookForm.nameField.$touched">
+                             <span ng-message="required">укажите Название книги</span>
+                        </span>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="bfc.newbook.published">Год издания:</label>
-                <div class="col-sm-10">
-                    <input type="number" ng-model="bfc.newbook.published" class="form-control" id=bfc.newbook.published" placeholder="Год издания">
+                <div class="form-group" ng-class="{'has-error' : bookForm.authorField.$touched && bookForm.authorField.$invalid}">
+                    <label class="control-label col-sm-2" for="bfc.newbook.author">Автор:</label>
+                    <div class="col-sm-6">
+                        <input type="text" ng-model="bfc.newbook.author" class="form-control" id="bfc.newbook.author" name="authorField" required>
+                        <span ng-messages="bookForm.authorField.$error" class="help-block" ng-show="bookForm.authorField.$touched">
+                             <span ng-message="required">укажите Автора</span>
+                        </span>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn-sm btn-primary" type="button" ng-click="bfc.save()">Сохранить</button>
-            </div>
-        </div>
-    </form>
+                <div class="form-group" ng-class="{'has-error' : bookForm.publishedField.$touched && bookForm.publishedField.$invalid}">
+                    <label class="control-label col-sm-2" for="bfc.newbook.published">Год издания:</label>
+                    <div class="col-sm-2">
+                        <input type="number" ng-model="bfc.newbook.published" class="form-control" id="bfc.newbook.published" name="publishedField" min="1800" max="2020">
+                        <span ng-messages="bookForm.publishedField.$error" class="help-block" ng-show="bookForm.publishedField.$touched">
+                             <span ng-message="min">подозрительный год издания</span>
+                             <span ng-message="max">подозрительный год издания</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button ng-disabled="bookForm.$invalid" class="btn btn-sm btn-danger" type="submit">Сохранить</button>
+                        <button  class="btn btn-sm btn-primary" type="button" ng-click="bfc.cancel()">Отмена</button>
+                    </div>
+                </div>
+            </form>
     <pre>
         {{bfc.newbook | json}}
     </pre>
-
+        </div>
+    </div>
 </div>

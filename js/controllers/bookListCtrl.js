@@ -2,10 +2,11 @@
  * Created by ak on 03.08.2015.
  */
 //Controller to represent the list of books
-BookListCtrl.$inject =['dataFactory'];
+'use strict';
+BookListCtrl.$inject = ['$location','dataFactory'];
 
 
-function BookListCtrl(dataFactory){
+function BookListCtrl($location, dataFactory){
     var ctrl = this;
 
     ctrl.status;
@@ -38,7 +39,7 @@ function BookListCtrl(dataFactory){
 
 
     //get the results for selected book iterating over results array
-     function getBookResult(bookID) {
+    function getBookResult(bookID) {
         var formattedResult = "---";
         if (ctrl.results.length > 0) {
             for(var idx in ctrl.results){
@@ -73,6 +74,7 @@ function BookListCtrl(dataFactory){
                 ctrl.status='unable to load results: '+error.message;
             });
     }
+
 }
 
 

@@ -5,7 +5,8 @@
 /*App Module */
 var quizApp =angular.module('quizApp',[
     "ngRoute",
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ngMessages'
 ]);
 
 quizApp.config(['$routeProvider',

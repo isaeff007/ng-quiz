@@ -1,9 +1,11 @@
 /**
  * Created by ak on 23.10.2015.
  */
-BookFormCtrl.$inject=['dataFactory'];
 
-function BookFormCtrl(dataFactory){
+'use strict';
+BookFormCtrl.$inject=['$location','dataFactory'];
+
+function BookFormCtrl($location ,dataFactory){
     var ctrl = this;
 
     //use as a DTO for server api
@@ -16,19 +18,32 @@ function BookFormCtrl(dataFactory){
         this.published=0;
     }
 
-    ctrl.save = save();
+    ctrl.save = saveBook;
+    ctrl.cancel=cancel;
 
     //the object wil be filled in the form
     ctrl.newbook = new Book();
 
 
-    function save() {
+
+    function saveBook() {
 
         if (ctrl.newbook.id){
-            dataFactory.createBook(ctrl.newbook);
+            dataFactory.createBook(ctrl.newbook).then(function(){
+               goToList();
+            });
         } else{
             console.log("new book is not valid");
         }
+    }
+
+    function cancel(){
+        goToList();
+    }
+
+    //redirect to the book list
+    function goToList() {
+        $location.path('/books');
     }
 
 }

@@ -1,34 +1,38 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <!--Sidebar content-->
             <input ng-model="query" class="form-control" placeholder="Поиск">
             <br/>
-            <select ng-model="blc.orderProp" class="btn-primary">
+            <div class="panel panel-default">
+                <div class="panel-heading">Всего книг: {{blc.books.length}}</div>
+                <div class="panel-body">
+                    <p>Результат: {{blc.totalResult.formattedPoints}}</p>
+                    <progress class="progress-bar-striped" max="blc.totalResult.pointsToEarn" animate="true">
+                        <bar   value="blc.totalResult.pointsEarned" type="success"><b>{{blc.totalResult.pointsEarned}} </b></bar>
+                        <bar   value="blc.totalResult.pointsToEarn-blc.totalResult.pointsEarned" type="danger"><b>{{blc.totalResult.pointsToEarn-blc.totalResult.pointsEarned}}</b></bar>
+                    </progress>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9" ng-if="blc.resultsLoaded">
+            <label class="control-label" >Сортировка: </label>
+            <select ng-model="blc.orderProp" class="btn-default">
                 <option value="name">по названию</option>
                 <option value="added">новые</option>
             </select>
-            <p><br/>Всего книг: {{blc.books.length}}</p>
-            <p><br/>Общий результат: {{blc.totalResult.formattedPoints}}</p>
-            <progress class="progress-bar-striped" max="blc.totalResult.pointsToEarn" animate="true">
-                <bar   value="100*blc.totalResult.pointsEarned/blc.totalResult.pointsToEarn" type="success"><b>{{blc.totalResult.pointsEarned}} </b></bar>
-                <bar   value="100-100*blc.totalResult.pointsEarned/blc.totalResult.pointsToEarn" type="danger"><b>{{blc.totalResult.pointsToEarn-blc.totalResult.pointsEarned}}</b></bar>
-            </progress>
-
-            <!--<p>File status: {{status}}</p>-->
-        </div>
-        <div class="col-md-10" ng-if="blc.resultsLoaded">
             <p class="list-group">
-                <!--::books would the data will not be changed, so the $watcher is not needed for this element &ndash;&gt; performance profit-->
-                <li ng-repeat="book in blc.books | filter:query | orderBy:blc.orderProp">
-                    <!--<a href="#/books/{{book.id}}" class="img-responsive"><img ng-src="{{book.imageUrl}}"></a>-->
-                    <a href="#/books/{{book.id}}" class="list-group-item">
-                        <span class="badge">{{blc.getBookResult(book.id)}}</span>
-                        <h4>{{book.name}}</h4>{{book.author}}</a>
-                </li>
+                <!--::blc.books would the data will not be changed, so the $watcher is not needed for this element &ndash;&gt; performance profit-->
+
+            <li ng-repeat="book in blc.books | filter:query | orderBy:blc.orderProp">
+                <!--<a href="#/books/{{book.id}}" class="img-responsive"><img ng-src="{{book.imageUrl}}"></a>-->
+                <a href="#/books/{{book.id}}" class="list-group-item">
+                    <span class="badge">{{blc.getBookResult(book.id)}}</span>
+                    <h4>{{book.name}}</h4>{{book.author}}</a>
+            </li>
             <!--Just show the books as a nice JSON format-->
             <pre>{{blc.books | filter:query|orderBy:blc.orderProp|json}}</pre>
-            </div>
         </div>
     </div>
+</div>
 </div>

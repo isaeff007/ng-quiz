@@ -3,11 +3,11 @@ body {
 }
 
 .incorrect {
-    color: red;
+    color:#d9534f;
 }
 
 .correct {
-    color: seagreen;
+    color: #5cb85c;
 }
 
 .title {

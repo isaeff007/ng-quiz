@@ -1,6 +1,7 @@
 /**
  * Created by ak on 19.05.2015.
  */
+'use strict';
 BookDetailCtrl.$inject = ['$routeParams', '$location', 'QUIZCONSTANTS', 'dataFactory'];
 
 function BookDetailCtrl ($routeParams, $location, QUIZCONSTANTS,  dataFactory  ) {

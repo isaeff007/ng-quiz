@@ -1,64 +1,76 @@
 <div class="row">
-    <div class="col-sm-3" style="background-color:lavenderblush;">
+    <!--left side results 3/12-->
+    <div class="col-sm-3">
         <!--results section-->
-        <!--<p>{{pointsEarned}}</p>-->
         <div ng-init="bdc.showAnswers=true">
             <button class="btn btn-sm btn-primary" type="button" ng-click="bdc.showAnswers=bdc.checkQuizCompleted()">Показать результат</button>
             <button class="btn btn-sm btn-primary" type="button" ng-click="bdc.reloadQuiz()">Обновить страницу</button>
-            <button class="btn btn-sm btn-primary" type="button" ng-click="bdc.cancel()">К списку</button>
             <div>
                 <alert ng-repeat="alert in bdc.alerts" type="{{alert.type}}" close="bdc.closeAlert($index)"><b>{{alert.msg}}</b></alert>
             </div>
             <br/>
             <div ng-hide="bdc.showAnswers">
-                <pre><b>Баллы: {{bdc.pointsEarned}} / {{bdc.pointsToEarn}}</b></pre>
-                <!--now
-                  the ANGULAR UI for result bars splitted to success/erros-->
-                <progress class="progress-striped" max="pointsToEarn" animate="true">
-                    <bar   value="100*bdc.pointsEarned/bdc.pointsToEarn" type="success"><b>{{bdc.pointsEarned}} </b></bar>
-                    <bar   value="100-100*bdc.pointsEarned/bdc.pointsToEarn" type="danger"><b>{{bdc.pointsToEarn-bdc.pointsEarned}}</b></bar>
-                </progress>
-                <div ng-repeat="result in bdc.results">
-                    {{result._id}}. <span
-                        ng-class="result.correct == bdc.constants.CORRECT ? 'correct' : 'incorrect'">
+                <!--panel color depending on result-->
+                <div ng-class = "(bdc.pointsToEarn/bdc.pointsEarned<2)?'panel panel-success' : 'panel panel-danger'">
+                    <div class ="panel-heading">
+                        <h3 class="panel-title">Результат: {{bdc.pointsEarned}} / {{bdc.pointsToEarn}} </h3>
+                    </div>
+                    <div class="panel-body">
+                        <progress class="progress-striped" max="bdc.pointsToEarn" animate="true">
+                            <bar   value="bdc.pointsEarned" type="success"><b>{{bdc.pointsEarned}} </b></bar>
+                            <bar   value="bdc.pointsToEarn-bdc.pointsEarned" type="danger"><b>{{bdc.pointsToEarn-bdc.pointsEarned}}</b></bar>
+                        </progress>
+                        <div ng-repeat="result in bdc.results">
+                            {{result._id}}. <span
+                                ng-class="result.correct == bdc.constants.CORRECT ? 'correct' : 'incorrect'">
                {{result.correct}} ({{result.points}})
                </span>
-                </div>
-                <br/>
+                        </div>
+                        <br/>
+                    </div> <!--panel content-->
+                </div> <!--panel success/error-->
                 <button class="btn btn-sm btn-primary" type="button" ng-click="bdc.updateResult()">Запомнить результат</button>
             </div>
         </div>
     </div>
-    <div class="col-sm-9" style="background-color:lavender;">
-        <p>File status: {{bdc.readstatus}}</p>
-        <h2>{{bdc.title}}</h2>
-        <form name="quiz">
-            <div ng-repeat="question in bdc.quiz">
-                <strong>{{question._id}}. {{question.question}}</strong>
-                <!-- create the true/false radio button for each question-->
-                <br/>
-                <div class="radiooption">
-                    <input required
-                           name="_id{{question._id}}"
-                           type="radio"
-                           value="true"
-                           ng-model="question.userChoice"
-                           ng-change="bdc.checkUserChoice(question._id, true)"/>
-                    <label for="_id{{question._id}}">{{bdc.constants.YES}}</label>
-                    <br/>
-                    <input required
-                           name="_id{{question._id}}"
-                           type="radio"
-                           value="false"
-                           ng-model="question.userChoice"
-                           ng-change="bdc.checkUserChoice(question._id,false)"/>
-                    <label for="_id{{question._id}}">{{bdc.constants.NO}}</label>
-                </div>
-                <br/>
+    <!--right side Questions 9/12-->
+    <div class="col-sm-9">
+        <!--<p>{{bdc.readstatus}}</p>-->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">{{bdc.title}}</h1>
             </div>
-        </form>
-        <hr/>
-
+            <div class="panel-body">
+                <form name="quiz">
+                    <div ng-repeat="question in bdc.quiz">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">{{question._id}}. {{question.question}}</div>
+                            <div class="panel-body">
+                                <!-- create the true/false radio button for each question-->
+                                <div class="radiooption">
+                                    <input required
+                                           name="_id{{question._id}}"
+                                           type="radio"
+                                           value="true"
+                                           ng-model="question.userChoice"
+                                           ng-change="bdc.checkUserChoice(question._id, true)"/>
+                                    <label for="_id{{question._id}}">{{bdc.constants.YES}}</label>
+                                    <br/>
+                                    <input required
+                                           name="_id{{question._id}}"
+                                           type="radio"
+                                           value="false"
+                                           ng-model="question.userChoice"
+                                           ng-change="bdc.checkUserChoice(question._id,false)"/>
+                                    <label for="_id{{question._id}}">{{bdc.constants.NO}}</label>
+                                </div>
+                            </div> <!--single question panel content-->
+                        </div> <!--single question panel-->
+                    </div>
+                </form>
+                <hr/>
+            </div> <!--panel body-->
+        </div> <!--panel-->
 
     </div>
 </div>

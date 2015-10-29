@@ -2,6 +2,7 @@
  * Created by ak on 08/10/15.
  */
 // set up ========================
+'use strict';
 var config = require('./config');
 var express  = require('express');
 var app      = express();                               // create our app w/ express
@@ -29,9 +30,14 @@ mongoose.connect(app.get('dbUrl'));
 app.use(cors());
 
 // express REST API part ===============================
+//get all avail. books , place them in the respond (books).
 app.get('/books', function(req, res){
-   Book.find(function( err, doc){
-      res.send(doc);
+   Book.find(function( err, books){
+       if(err){
+           return res.status(400).send({message: err.message});
+       }else {
+           res.send(books);
+       }
    });
 });
 
@@ -52,7 +58,7 @@ app.post('/books',function(req, res){
     book.name=req.body.name;
     book.added = req.body.added;
     book.published=req.body.published;
-    book.imageUrl=req.body.imageUrl;
+    book.imageUrl=req.body.id+'.0.jpg';
     book.author=req.body.author;
 
     //save the instance (save() is embedded) and check the errors.
@@ -78,7 +84,7 @@ app.put('/results/:id', function(req, res){
       "pointsEarned" : req.body.pointsEarned
    } ,function(err, bookResult){
       if (err) throw err;
-      console.log("Successfully updated: "+ bookResult);
+      res.json(bookResult);
    });
 });
 
