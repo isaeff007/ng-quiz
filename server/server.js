@@ -84,7 +84,7 @@ app.put('/results/:id', function(req, res){
       "pointsEarned" : req.body.pointsEarned
    } ,function(err, bookResult){
       if (err) throw err;
-      res.json(bookResult);
+      res.json({message: "new result added to list", data: bookResult});
    });
 });
 

@@ -8,6 +8,7 @@ BookFormCtrl.$inject=['$location','dataFactory'];
 function BookFormCtrl($location ,dataFactory){
     var ctrl = this;
 
+    ctrl.responseMsg='';
     //use as a DTO for server api
     function Book(){
         this.added= new Date().toJSON().slice(0,10);
@@ -29,8 +30,9 @@ function BookFormCtrl($location ,dataFactory){
     function saveBook() {
 
         if (ctrl.newbook.id){
-            dataFactory.createBook(ctrl.newbook).then(function(){
-               goToList();
+            dataFactory.createBook(ctrl.newbook).then(function(res){
+                ctrl.responseMsg=res;
+               //goToList();
             });
         } else{
             console.log("new book is not valid");

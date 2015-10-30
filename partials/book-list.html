@@ -1,17 +1,19 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
-            <!--Sidebar content-->
-            <input ng-model="query" class="form-control" placeholder="Поиск">
-            <br/>
-            <div class="panel panel-default">
-                <div class="panel-heading">Всего книг: {{blc.books.length}}</div>
-                <div class="panel-body">
-                    <p>Результат: {{blc.totalResult.formattedPoints}}</p>
-                    <progress class="progress-bar-striped" max="blc.totalResult.pointsToEarn" animate="true">
-                        <bar   value="blc.totalResult.pointsEarned" type="success"><b>{{blc.totalResult.pointsEarned}} </b></bar>
-                        <bar   value="blc.totalResult.pointsToEarn-blc.totalResult.pointsEarned" type="danger"><b>{{blc.totalResult.pointsToEarn-blc.totalResult.pointsEarned}}</b></bar>
-                    </progress>
+            <div class="results_fixed">
+                <!--Sidebar content-->
+                <input ng-model="query" class="form-control" placeholder="Поиск">
+                <br/>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Всего книг: {{blc.books.length}}</div>
+                    <div class="panel-body">
+                        <p>Результат: {{blc.totalResult.formattedPoints}}</p>
+                        <progress class="progress-bar-striped" max="blc.totalResult.pointsToEarn" animate="true">
+                            <bar   value="blc.totalResult.pointsEarned" type="success"><b>{{blc.totalResult.pointsEarned}} </b></bar>
+                            <bar   value="blc.totalResult.pointsToEarn-blc.totalResult.pointsEarned" type="danger"><b>{{blc.totalResult.pointsToEarn-blc.totalResult.pointsEarned}}</b></bar>
+                        </progress>
+                    </div>
                 </div>
             </div>
         </div>
@@ -23,7 +25,6 @@
             </select>
             <p class="list-group">
                 <!--::blc.books would the data will not be changed, so the $watcher is not needed for this element &ndash;&gt; performance profit-->
-
             <li ng-repeat="book in blc.books | filter:query | orderBy:blc.orderProp">
                 <!--<a href="#/books/{{book.id}}" class="img-responsive"><img ng-src="{{book.imageUrl}}"></a>-->
                 <a href="#/books/{{book.id}}" class="list-group-item">
