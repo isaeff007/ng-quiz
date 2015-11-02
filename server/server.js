@@ -24,7 +24,15 @@ var Results = require("./models/results");
 var port = process.env.PORT || 3000;
 //set the "dbUrl" to the mongodb url that corresponds to the environment we are currently in
 app.set('dbUrl', config.db[app.settings.env]);
-mongoose.connect(app.get('dbUrl'));
+var uriString = app.get('dbUrl');
+//connect with data base
+mongoose.connect(uriString, function(err, res){
+    if (err){
+        console.log('ERROR connecting to: '+uriString+'. '+err);
+    }else{
+        console.log('Connected to: '+uriString);
+    }
+});
 
 //allow to access from all origns (can be restricted later for specific routes)
 app.use(cors());
@@ -52,13 +60,14 @@ app.get('/books/:id',function(req, res){
 //insert the new book to the list
 app.post('/books',function(req, res){
     //create a new instance for a book  (data holder)
+    //var book = Book.getValidatedBook(req.body);
     var book = new Book();
     //set the properties with  POST data coming from client
-    book.id=req.body.id;
+    book.id=req.body.id.replace(/ /g,''); //whit spaces are not allowed
     book.name=req.body.name;
     book.added = req.body.added;
     book.published=req.body.published;
-    book.imageUrl=req.body.id+'.0.jpg';
+    book.imageUrl=book.id+'.0.jpg';
     book.author=req.body.author;
 
     //save the instance (save() is embedded) and check the errors.
