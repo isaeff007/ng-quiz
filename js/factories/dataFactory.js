@@ -5,9 +5,10 @@
 //so else the use of '$http' parameter is not mandatory.
 'use strict';
 
-dataFactory.$inject=['$http'];
+//inject the configuration values (besides $http)
+dataFactory.$inject=['$http', 'appConfig'];
 
-function dataFactory($http){
+function dataFactory($http, config){
     var bookFactory = {};
 
     //functions as bindable members
@@ -21,31 +22,31 @@ function dataFactory($http){
 
     //retrieve the book list via REST API from mongo DB
     function getBooks() {
-        return $http.get("http://localhost:3000/books");
+        return $http.get(config.basePath+'/books');
     }
 
     //get the selected book quiz
     function getBook(bookID){
-        return $http.get("http://localhost:3000/books/"+bookID);
+        return $http.get(config.basePath+'/books/'+bookID);
     }
 
     //get the quiz results for all books
     function getResults() {
-        return $http.get("http://localhost:3000/results");
+        return $http.get(config.basePath+'/results');
     }
     //get the quiz results for specific book
     function getBookResult (bookID) {
-        return $http.get("http://localhost:3000/results"+bookID);
+        return $http.get(config.basePath+'/results/'+bookID);
     }
 
     //save results for an specific book
     function updateBookResults(bookResult){
-        return $http.put("http://localhost:3000/results/"+bookResult.bookID, bookResult);
+        return $http.put(config.basePath+'/results/'+bookResult.bookID, bookResult);
     }
 
     //create a new book
     function createBook(newBook){
-        return $http.post("http://localhost:3000/books", newBook);
+        return $http.post(config.basePath+'/books', newBook);
     }
 
     //return the factory as object with assigned methods.
