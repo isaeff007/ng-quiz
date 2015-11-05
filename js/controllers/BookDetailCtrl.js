@@ -124,7 +124,7 @@ function BookDetailCtrl ($routeParams, $location, QUIZCONSTANTS,  dataFactory  )
     //update result for current book
    function updateResult() {
         var bookResult = new BookResult();
-        if (bookResult.pointsEarned > 0 && bookResult.pointsToEarn > 0){
+        if (bookResult.pointsToEarn > 0){
             dataFactory.updateBookResults(new BookResult());
         } else{
             console.log("no book result availiable for "+bookResult.bookID);

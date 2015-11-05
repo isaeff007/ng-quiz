@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 col-xs-12">
             <div class="results_fixed">
                 <!--Sidebar content-->
                 <input ng-model="query" class="form-control" placeholder="Поиск">
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-9" ng-if="blc.resultsLoaded">
+        <div class="col-md-9 col-xs-12" ng-if="blc.resultsLoaded">
             <label class="control-label" >Сортировка: </label>
             <select ng-model="blc.orderProp" class="btn-default">
                 <option value="name">по названию</option>

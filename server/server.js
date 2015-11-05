@@ -1,7 +1,7 @@
 /**
  * Created by ak on 08/10/15.
  */
-// set up ========================
+// ================ set up ========================
 'use strict';
 var express  = require('express');
 var app      = express();                               // create our app w/ express
@@ -13,7 +13,6 @@ var methodOverride = require('method-override'); // simulate DELETE and PUT (exp
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
 
 //================ Models =============================
 //import the  models to store the data from database collections.
@@ -92,7 +91,7 @@ app.put('/results/:id', function(req, res){
       "pointsEarned" : req.body.pointsEarned
    } ,function(err, bookResult){
       if (err) throw err;
-      res.json({message: "new result added to list", data: bookResult});
+      res.redirect('..');
    });
 });
 // listen (start app with node server.js) ======================================

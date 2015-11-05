@@ -24,3 +24,21 @@ body {
     background-color: gainsboro;
     font-weight: bold;
 }
+
+.success{
+    background-color: #008800;
+}
+
+/*score sheet*/
+th {
+    text-align: center;
+}
+
+td {
+    text-align: center;
+}
+
+tfoot{
+    text-align: center;
+    font-weight: bold;
+}
