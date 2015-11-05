@@ -1,5 +1,5 @@
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion
-
+lib-cov
 *.iml
 
 ## Directory-based project format:
@@ -12,6 +12,19 @@
 # .idea/dictionaries
 
 # extern libraries
+npm-debug.log
 node_modules/
-bower_components/
+public/libs
 .DS_Store
+
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+pids
+logs
+results
