@@ -5,11 +5,16 @@
   "main": "server.js",
   "author": "ak",
   "dependencies": {
+    "async": "^1.5.0",
+    "body-parser": "~1.5.2",
+    "connect-flash": "^0.1.1",
     "express": "~4.7.2",
+    "method-override": "~2.1.2",
     "mongoose": "~3.6.2",
     "morgan": "~1.2.2",
-    "body-parser": "~1.5.2",
-    "method-override": "~2.1.2"
+    "passport": "^0.3.0",
+    "passport-github": "^1.0.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "cors": "^2.7.1"

@@ -18,6 +18,10 @@ angular.module('appRoutes',[]).config(['$routeProvider',
                 templateUrl: 'public/views/book-form.html',
                 controller: 'BookFormCtrl as bfc'
             }).
+            when('/login', {
+                templateUrl: 'public/views/login.html'
+                //controller: 'BookFormCtrl as bfc'
+            }).
             otherwise({
                 redirectTo: '/books'
             });
