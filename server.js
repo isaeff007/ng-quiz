@@ -50,8 +50,8 @@ mongoose.connect(uriString, function(err, res){
 // ====================    routes  ===============================
 require('./app/routes/main')(app, settings); //checks if logged in
 require('./app/routes/auth')(app, settings);
-require('./app/routes/resultsRoute')(app);
-require('./app/routes/bookRoute')(app);
+require('./app/routes/resultsRoute')(app, settings);
+require('./app/routes/bookRoute')(app, settings);
 
 //========================expose app==============================
 module.exports = app;
