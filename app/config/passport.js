@@ -59,7 +59,7 @@ module.exports = function (passport) {
     if(users[email] && users[email].password === password) {
       return done(null, users[email]);
     } else {
-      done(null, false, req.flash('message', 'Invalid email or password'));
+      done(null, false, {message: 'Invalid email or password'});
     }
   }));
 
@@ -88,7 +88,7 @@ module.exports = function (passport) {
             ]
           }, function (err, results) {
             if (err) {
-              done(null, false, req.flash('signupMessage', err.message));
+              done(null, false, {signupMessage:  err.message});
             } else {
               done(null, results.newAccount);
             }

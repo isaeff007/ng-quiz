@@ -22,8 +22,8 @@ ctrl.login = login;
     function login(){
         authFactory.loginUser(ctrl.user).success(function(user){
             //no error , authentication OK
-            ctrl.errorMessage='User is ok';
-            $location.url('/books')
+            ctrl.errorMessage='User '+user.username+ ' is ok';
+            //$location.url('/books')
         })
             .error(function(){
                 ctrl.errorMessage='Login failed';
