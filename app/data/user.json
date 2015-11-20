@@ -1,0 +1,13 @@
+{
+  "local" : {
+    "email" : "anton@mail.de",
+    "password" : "123",
+    "name" : "Antonio"
+  },
+  "google" : {
+    "id" : "",
+    "token" : "",
+    "email" : "",
+    "name" : ""
+  }
+}

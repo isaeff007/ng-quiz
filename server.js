@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');    // pull information from HTML POST f
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var passport = new require('passport');
 
 
 app.use(bodyParser.json()); // support json encoded bodies
@@ -27,17 +28,12 @@ app.set('dbUrl', config.db[app.settings.env]); //set the "dbUrl" to the mongodb 
 var uriString = app.get('dbUrl');
 
 //================ Authentication =====================
-var passport = require('passport'),
-    flash = require('connect-flash');
-
+var flash = require('connect-flash');
 require('./app/config/passport')(passport);
 
-// required for passport
-app.use(session({ secret: 'thestringisusedtocreatehash' })); // session secret
 app.use(passport.initialize()); //is invoked on every request. It ensures the session contains a passport.user object, which may be empty.
 app.use(passport.session()); //is a Passport Strategy which will load the user object onto req.user if a serialised user object was found in the server.
-//app.use(flash());
-
+app.use(flash());
 // Object that stores application level settings that are used by the routes
 // This avoids the need to create global variables and also help in testing since you can inject
 // any configuration you wish to test

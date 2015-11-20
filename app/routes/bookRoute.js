@@ -39,6 +39,7 @@ module.exports = function(app, settings) {
         Questions.find({bookid: req.params.id}, function (err, books) {
             if (err) throw err;
             res.send(books);
+            return next();
         })
     });
 

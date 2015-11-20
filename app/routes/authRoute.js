@@ -7,16 +7,20 @@ module.exports = function(app, settings){
 
   //route to test if the user is logged in or not. (more ore less checking if the req.user is set or not
   router.get('/loggedin', function(req,res){
-    return res.send(req.isAuthenticated()? req.user.username : '0');
+     console.log(req.session);
+    return res.send(req.isAuthenticated()? req.user.local.name : '0');
   });
 
   //route to log in using the our defined "local-login" strategy
-  router.post('/local-login', passport.authenticate('local-login'),
+  router.post('/local-login', passport.authenticate('local-login', {
+          failureFlash: true, //allow flash messages
+          session: true //activate session
+      }),
       //// If this function gets called, authentication was successful.
       // `req.user` contains the authenticated user:
       function(req,res){
-         return res.send(req.user);
-  });
+        return res.send(req.user);
+ });
 
   //route to log out
   router.post('/local-login', function(req,res){

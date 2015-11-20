@@ -15,7 +15,6 @@ angular.module('appRoutes',['appAuth']).config(['$routeProvider',
                 // Authenticated
                 if (user !== '0')
                     deferred.resolve();
-
                 // Not Authenticated
                 else {
                     $rootScope.message = 'You need to log in.';
@@ -42,7 +41,10 @@ angular.module('appRoutes',['appAuth']).config(['$routeProvider',
             }).
             when('/book/new', {
                 templateUrl: 'public/views/book-form.html',
-                controller: 'BookFormCtrl as bfc'
+                controller: 'BookFormCtrl as bfc',
+                resolve: {
+                    loggedin : checkLoggedin
+                }
             }).
             when('/login', {
                 templateUrl: 'public/views/login.html',

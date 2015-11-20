@@ -2,7 +2,8 @@
  * Created by ak on 09.11.2015.
  */
 //================================================
-// Add an interceptor for AJAX errors (intercept all http requests)
+// Add an interceptor for AJAX errors (intercept all unauthorized  http requests)
+// i.e. the passport returns the status 401 if the user needs to authenticate
 //================================================
 angular.module('appAuth', []).config(['$httpProvider', function($httpProvider) {
 

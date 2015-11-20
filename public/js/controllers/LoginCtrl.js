@@ -10,7 +10,7 @@ ctrl = this;
 ctrl.errorMessage='';
 
 function User(){
-    this.email = ''; //the name in strategy --> should be later 'username'
+    this.email = ''; //the user name field name in strategy  (s. user model) and strategy definition.
     this.password= '';
 }
  //the user is filled by the form
@@ -20,13 +20,15 @@ function User(){
 ctrl.login = login;
 
     function login(){
-        authFactory.loginUser(ctrl.user).success(function(user){
+        authFactory.loginUser(ctrl.user).success(function(user, status){
             //no error , authentication OK
-            ctrl.errorMessage='User '+user.username+ ' is ok';
+            ctrl.errorMessage='Welcome, '+user.local.name+ '!';
+            return user.local.name;
             //$location.url('/books')
         })
-            .error(function(){
+            .error(function(err, info, zusatz){
                 ctrl.errorMessage='Login failed';
+
                 $location.url('login');
             });
 
